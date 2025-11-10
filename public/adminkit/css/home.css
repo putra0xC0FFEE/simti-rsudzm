@@ -1,0 +1,67 @@
+body {
+  background: linear-gradient(135deg, #2e8479 0%, #eaf6f3 100%);
+  font-family: 'Inter', sans-serif;
+  color: #1c3e3a;
+}
+
+/* --- Hero Section --- */
+.hero {
+  margin-top: 30px; /* beri ruang sedikit lebih besar dari atas */
+  text-align: center;
+}
+
+/* --- Logo --- */
+.hero-logo {
+  width: 220px;      /* lebih kecil dari sebelumnya agar proporsional */
+  max-width: 50vw;   /* responsive agar tidak terlalu besar di layar kecil */
+  height: auto;
+  margin-bottom: 20px; /* beri jarak antar logo dan judul */
+}
+
+/* --- Judul utama --- */
+.hero h1 {
+  font-size: 34px;  
+  font-weight: 700;
+  color: #1c3e3a;
+  margin-bottom: 14px;
+}
+
+/* --- Subjudul --- */
+.hero p {
+  font-size: 16px;
+  color: #244c47;
+  margin-bottom: 40px; /* beri jarak yang cukup sebelum tombol */
+  line-height: 1.6;
+}
+
+/* --- Tombol Masuk --- */
+.btn-login {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background-color: #00b4cc;
+  color: #fff;
+  font-weight: 600;
+  border: none;
+  padding: 12px 36px;
+  border-radius: 8px;
+  font-size: 16px;
+  transition: all 0.3s ease;
+  text-decoration: none;
+}
+
+.btn-login:hover {
+  background-color: #0095aa;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.25);
+}
+
+/* --- Footer --- */
+footer {
+  color: #1e3a37;
+  font-size: 14px;
+  text-align: center;
+  padding: 10px 0;
+  margin-top: 60px;
+}
