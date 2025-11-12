@@ -11,10 +11,14 @@
 <div class="card">
     <div class="card-body">
         <div class="m-sm-3">
-            <form>
+            @if (session('error'))
+              <div class="alert alert-danger">{{ session('error') }}</div>
+            @endif
+            <form method="POST" action="{{ route('auth.login') }}">
+                @csrf
                 <div class="mb-3">
                     <label class="form-label">Username</label>
-                    <input class="form-control form-control-lg" type="text" name="username" placeholder="Masukkan username" required autofocus>
+                    <input class="form-control form-control-lg" type="text" name="username" placeholder="Masukkan username" value="{{ old('username') }}" required autofocus>
                 </div>
                 <div class="mb-3">
                     <label class="form-label">Password</label>

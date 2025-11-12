@@ -41,13 +41,29 @@
 				</a>
 			</li>
 
+			@auth
+			@if (Auth::user()->role === 'admin')
 			<li class="sidebar-header">Administrator</li>
 			<li class="sidebar-item">
-    <a class="sidebar-link" href="{{ url('/pengguna') }}">
+    <a data-bs-target="#penggunaMenu" data-bs-toggle="collapse" class="sidebar-link collapsed" href="#">
         <i class="align-middle" data-feather="user"></i>
         <span class="align-middle">Pengguna</span>
     </a>
-</li>
+    <ul id="penggunaMenu" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
+        <li class="sidebar-item {{ request()->is('pengguna') ? 'active' : '' }}">
+            <a class="sidebar-link" href="{{ url('/pengguna') }}">
+                <i class="align-middle" data-feather="users"></i>
+                <span class="align-middle">Daftar Pengguna</span>
+            </a>
+        </li>
+        <li class="sidebar-item {{ request()->is('pengguna/tambah') ? 'active' : '' }}">
+            <a class="sidebar-link" href="{{ url('/pengguna/tambah') }}">
+                <i class="align-middle" data-feather="user-plus"></i>
+                <span class="align-middle">Tambah Pengguna</span>
+            </a>
+        </li>
+    </ul>
+ </li>
 
 <li class="sidebar-item">
     <a data-bs-target="#masterDataMenu" data-bs-toggle="collapse" class="sidebar-link collapsed" href="#">
@@ -77,8 +93,23 @@
             </a>
         </li>
     </ul>
+
 </li>
-			
-		</ul>
+                @endif
+                @endauth
+
+                @auth
+                <li class="sidebar-item">
+                    <a class="sidebar-link" href="#" onclick="event.preventDefault(); document.getElementById('sidebar-logout-form').submit();">
+                        <i class="align-middle" data-feather="log-out"></i>
+                        <span class="align-middle">Logout</span>
+                    </a>
+                    <form id="sidebar-logout-form" method="POST" action="{{ route('logout') }}" class="d-none">
+                        @csrf
+                    </form>
+                </li>
+                @endauth
+
+            </ul>
 	</div>
 </nav>
