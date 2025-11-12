@@ -34,6 +34,13 @@
 				</a>
 			</li>
 
+			<li class="sidebar-item {{ request()->is('cctv') ? 'active' : '' }}">
+				<a class="sidebar-link" href="{{ url('cctv') }}">
+					<i class="align-middle" data-feather="video"></i>
+					<span class="align-middle">CCTV</span>
+				</a>
+			</li>
+
 			<li class="sidebar-item {{ request()->is('laporan') ? 'active' : '' }}">
 				<a class="sidebar-link" href="{{ url('laporan') }}">
 					<i class="align-middle" data-feather="clipboard"></i>
@@ -43,36 +50,23 @@
 
 			@auth
 			@if (Auth::user()->role === 'admin')
-			<li class="sidebar-header">Administrator</li>
-			<li class="sidebar-item">
-    <a data-bs-target="#penggunaMenu" data-bs-toggle="collapse" class="sidebar-link collapsed" href="#">
+<li class="sidebar-header">Administrator</li>
+<li class="sidebar-item {{ request()->is('pengguna') ? 'active' : '' }}">
+    <a class="sidebar-link" href="{{ url('/pengguna') }}">
         <i class="align-middle" data-feather="user"></i>
         <span class="align-middle">Pengguna</span>
     </a>
-    <ul id="penggunaMenu" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
-        <li class="sidebar-item {{ request()->is('pengguna') ? 'active' : '' }}">
-            <a class="sidebar-link" href="{{ url('/pengguna') }}">
-                <i class="align-middle" data-feather="users"></i>
-                <span class="align-middle">Daftar Pengguna</span>
-            </a>
-        </li>
-        <li class="sidebar-item {{ request()->is('pengguna/tambah') ? 'active' : '' }}">
-            <a class="sidebar-link" href="{{ url('/pengguna/tambah') }}">
-                <i class="align-middle" data-feather="user-plus"></i>
-                <span class="align-middle">Tambah Pengguna</span>
-            </a>
-        </li>
-    </ul>
  </li>
 
+@php($mdOpen = request()->is('ruangan*'))
 <li class="sidebar-item">
-    <a data-bs-target="#masterDataMenu" data-bs-toggle="collapse" class="sidebar-link collapsed" href="#">
+    <a data-bs-target="#masterDataMenu" data-bs-toggle="collapse" class="sidebar-link {{ $mdOpen ? '' : 'collapsed' }}" href="#">
         <i class="align-middle" data-feather="database"></i>
         <span class="align-middle">Master Data</span>	
     </a>
 
-    <ul id="masterDataMenu" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
-        <li class="sidebar-item">
+    <ul id="masterDataMenu" class="sidebar-dropdown list-unstyled collapse {{ $mdOpen ? 'show' : '' }}" data-bs-parent="#sidebar">
+        <li class="sidebar-item {{ request()->is('ruangan*') ? 'active' : '' }}">
             <a class="sidebar-link" href="{{ url('/ruangan') }}">
                 <i class="align-middle" data-feather="layout"></i>
                 <span class="align-middle">Ruangan</span>

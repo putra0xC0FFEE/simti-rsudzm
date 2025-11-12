@@ -11,18 +11,18 @@
 <div class="card">
     <div class="card-body">
         <div class="m-sm-3">
-            @if (session('error'))
-              <div class="alert alert-danger">{{ session('error') }}</div>
-            @endif
-            <form method="POST" action="{{ route('auth.login') }}">
+            <form method="POST" action="{{ route('auth.login') }}" novalidate>
                 @csrf
                 <div class="mb-3">
                     <label class="form-label">Username</label>
-                    <input class="form-control form-control-lg" type="text" name="username" placeholder="Masukkan username" value="{{ old('username') }}" required autofocus>
+                    <input class="form-control form-control-lg @error('username') is-invalid @enderror" type="text" name="username" placeholder="Masukkan username" value="{{ old('username') }}" required autofocus>
                 </div>
                 <div class="mb-3">
                     <label class="form-label">Password</label>
-                    <input class="form-control form-control-lg" type="password" name="password" placeholder="Masukkan password" required>
+                    <input class="form-control form-control-lg @error('password') is-invalid @enderror" type="password" name="password" placeholder="Masukkan password" required>
+                    @error('password')
+                      <div class="invalid-feedback">{{ $message }}</div>
+                    @enderror
                 </div>
                 <div class="d-grid gap-2 mt-4">
                     <button type="submit" class="btn btn-lg btn-primary">Masuk</button>
@@ -36,4 +36,27 @@
     Belum punya akun?
    <span style="color: blue;"> Silahkan Lapor ke Admin</span>
 </div>
+
+@push('scripts')
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    @if ($errors->any())
+      const message = {!! json_encode($errors->first()) !!};
+      Swal.fire({
+        icon: 'error',
+        title: 'Login gagal',
+        text: message,
+        confirmButtonText: 'OK'
+      });
+      // Fokus ke field yang error terlebih dulu
+      @if ($errors->has('username'))
+        document.querySelector('input[name="username"]').focus();
+      @elseif ($errors->has('password'))
+        document.querySelector('input[name="password"]').focus();
+      @endif
+    @endif
+  });
+  </script>
+@endpush
 @endsection
