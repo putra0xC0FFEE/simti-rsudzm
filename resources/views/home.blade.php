@@ -17,9 +17,16 @@
         <strong>UPTD RSUD dr. Zubir Mahmud</strong><br>
     </p>
 
+@auth
+<a href="{{ url('/home') }}" class="btn btn-primary mt-3 d-inline-flex align-items-center justify-content-center gap-2">
+    <i data-feather="layout"></i>
+    <span>Buka Dashboard</span>
+</a>
+@else
 <a href="{{ url('/auth/login') }}" class="btn btn-login mt-3 d-inline-flex align-items-center justify-content-center gap-2">
     <i data-feather="log-in"></i>
     <span>Masuk ke Sistem</span>
 </a>
+@endauth
 </div>
 @endsection

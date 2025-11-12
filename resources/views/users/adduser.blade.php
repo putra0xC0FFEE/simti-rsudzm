@@ -1,61 +1,72 @@
 @extends('layouts.app')
 
-@section('title', 'Dashboard')
+@section('title', 'Tambah Pengguna')
 
 @section('content')
-<h1 class="page-title">Tambah Pengguna</h1>
+<h1 class="page-title mb-4">Tambah Pengguna</h1>
 
 <div class="row">
   <div class="col-12">
     <div class="card shadow-sm">
-      <div class="card-header">
-        <h5 class="card-title mb-0">Tambah Pengguna Baru</h5>
+      <div class="card-header d-flex justify-content-between align-items-center">
+        <h5 class="card-title mb-0">Form Tambah Pengguna Baru</h5>
+        <a href="{{ route('users.index') }}" class="btn btn-sm btn-outline-secondary d-inline-flex align-items-center gap-2">
+          <i data-feather="arrow-left"></i>
+          <span>Kembali</span>
+        </a>
       </div>
       <div class="card-body">
-
-          <form>
+        <form method="POST" action="{{ route('users.store') }}">
+          @csrf
           <div class="row g-3">
 
+            {{-- Nama Lengkap --}}
             <div class="col-md-6">
-              <label for="first_name" class="form-label">Nama Depan</label>
-              <input type="text" id="first_name" name="first_name" class="form-control" placeholder="Masukkan nama depan" required>
+              <label for="full_name" class="form-label">Nama Lengkap</label>
+              <input type="text" id="full_name" name="name" class="form-control" placeholder="Masukkan nama lengkap" value="{{ old('name') }}" required>
+              @error('name')
+                <div class="text-danger small">{{ $message }}</div>
+              @enderror
             </div>
 
-            <div class="col-md-6">
-              <label for="last_name" class="form-label">Nama Belakang</label>
-              <input type="text" id="last_name" name="last_name" class="form-control" placeholder="Masukkan nama belakang">
-            </div>
-
+            {{-- Username --}}
             <div class="col-md-6">
               <label for="username" class="form-label">Nama Pengguna</label>
-              <input type="text" id="username" name="username" class="form-control" placeholder="Masukkan username" required>
+              <input type="text" id="username" name="username" class="form-control" placeholder="Masukkan username" value="{{ old('username') }}" required>
+              @error('username')
+                <div class="text-danger small">{{ $message }}</div>
+              @enderror
             </div>
 
-            <div class="col-md-6">
-              <label for="photo" class="form-label">Upload Foto</label>
-              <input type="file" id="photo" name="photo" class="form-control" accept="image/*" onchange="previewImage(event)">
-              <small class="text-muted">Format yang didukung: JPG, PNG, JPEG (maks. 1MB)</small>
-
-              <div class="mt-2">
-                <img id="preview" src="#" alt="Preview Foto" class="rounded shadow-sm" style="display:none; width:100px; height:100px; object-fit:cover;">
-              </div>
-            </div>
-
+            {{-- Password --}}
             <div class="col-md-6">
               <label for="password" class="form-label">Password</label>
               <input type="password" id="password" name="password" class="form-control" placeholder="Masukkan password" required>
+              @error('password')
+                <div class="text-danger small">{{ $message }}</div>
+              @enderror
             </div>
 
+            {{-- Role --}}
             <div class="col-md-6">
-              <label for="password_confirmation" class="form-label">Konfirmasi Password</label>
-              <input type="password" id="password_confirmation" name="password_confirmation" class="form-control" placeholder="Ulangi password" required>
+              <label for="role" class="form-label">Role</label>
+              <select id="role" name="role" class="form-select" required>
+                 <option value="admin" {{ old('role') === 'admin' ? 'selected' : '' }}>Admin</option>
+                <option value="staff" {{ old('role') === 'staff' ? 'selected' : '' }}>Staff</option>          
+              </select>
+              @error('role')
+                <div class="text-danger small">{{ $message }}</div>
+              @enderror
             </div>
-          </div>
 
-          <div class="mt-4 text-end">
-            <button type="submit" class="btn btn-primary">
-              <i class="fa fa-user-plus me-2"></i> Tambah Pengguna
-            </button>
+
+            {{-- Tombol Aksi --}}
+            <div class="col-12 text-end mt-4 d-flex justify-content-end gap-2">
+              <button type="submit" class="btn btn-primary d-inline-flex align-items-center gap-2">
+                <i data-feather="user-plus"></i>
+                <span>Tambah Pengguna</span>
+              </button>
+            </div>
           </div>
         </form>
       </div>
@@ -63,18 +74,11 @@
   </div>
 </div>
 
-{{-- FontAwesome --}}
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-
-{{-- Preview Script --}}
+{{-- Feather Icon Support --}}
 <script>
-function previewImage(event) {
-  const preview = document.getElementById('preview');
-  const file = event.target.files[0];
-  if (file) {
-    preview.src = URL.createObjectURL(file);
-    preview.style.display = 'block';
+  if (typeof feather !== 'undefined') {
+    feather.replace();
   }
-}
 </script>
+
 @endsection
