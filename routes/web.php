@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Models\User;
+use App\Models\Room;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Auth;
@@ -100,6 +101,9 @@ Route::post('/auth/login', function (Request $request) {
     $credentials = $request->validate([
         'username' => ['required','string'],
         'password' => ['required','string'],
+    ], [
+        'username.required' => 'Kamu harus masukan username',
+        'password.required' => 'Kamu harus masukan password',
     ]);
 
     if (Auth::attempt(['username' => $credentials['username'], 'password' => $credentials['password']])) {
@@ -107,7 +111,9 @@ Route::post('/auth/login', function (Request $request) {
         return redirect()->intended('/home');
     }
 
-    return back()->withInput($request->only('username'))->with('error', 'Username atau password salah.');
+    // Tandai error pada kolom username agar mudah ditampilkan/diarahkan
+    return back()->withInput($request->only('username'))
+        ->withErrors(['username' => 'Username atau password salah']);
 })->name('auth.login');
 
 // Logout (POST)
@@ -122,3 +128,44 @@ Route::post('/auth/logout', function (Request $request) {
 Route::get('/pengguna/daftar', function () {
     return redirect()->route('users.index');
 })->middleware('auth');
+
+// Ruangan
+Route::get('/ruangan', function () {
+    $rooms = Room::orderBy('name')->paginate(10);
+    return view('ruangan.ruangan', compact('rooms'));
+})->name('rooms.index')->middleware('auth');
+
+Route::get('/ruangan/tambah', function () {
+    return view('ruangan.addruangan');
+})->name('rooms.create')->middleware('auth');
+
+Route::post('/ruangan', function (Request $request) {
+    $data = $request->validate([
+        'name' => ['required','string','max:255'],
+        'kode' => ['nullable','string','max:100'],
+    ]);
+    Room::create($data);
+    return redirect()->route('rooms.index')->with('success', 'Ruangan berhasil ditambahkan.');
+})->name('rooms.store')->middleware('auth');
+
+// Halaman edit ruangan (id via query ?id=)
+Route::get('/ruangan/edit', function (Request $request) {
+    $room = Room::findOrFail($request->query('id'));
+    return view('ruangan.editruangan', compact('room'));
+})->name('rooms.edit')->middleware('auth');
+
+// Update ruangan
+Route::put('/ruangan/{room}', function (Request $request, Room $room) {
+    $data = $request->validate([
+        'name' => ['required','string','max:255'],
+        'kode' => ['nullable','string','max:100'],
+    ]);
+    $room->update($data);
+    return redirect()->route('rooms.index')->with('success', 'Ruangan berhasil diperbarui.');
+})->name('rooms.update')->middleware('auth');
+
+// Hapus ruangan
+Route::delete('/ruangan/{room}', function (Request $request, Room $room) {
+    $room->delete();
+    return redirect()->route('rooms.index')->with('success', 'Ruangan berhasil dihapus.');
+})->name('rooms.destroy')->middleware('auth');
