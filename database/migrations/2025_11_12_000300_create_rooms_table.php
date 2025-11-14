@@ -12,7 +12,6 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('kode')->nullable();
-            // keterangan dihapus dari skema sesuai kebutuhan terbaru
             $table->timestamps();
         });
     }
