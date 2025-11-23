@@ -16,10 +16,23 @@
         </a>
       </div>
       <div class="card-body">
-        <form method="POST" action="{{ route('rooms.update', $room->id) }}">
+        <form method="POST" action="{{ route('rooms.update', $encoded ?? encrypt($room->room_id)) }}">
           @csrf
           @method('PUT')
           <div class="row g-3">
+
+            <div class="col-md-6">
+              <label for="kategori" class="form-label">Kategori Ruangan</label>
+              <select id="kategori" name="kategori" class="form-select" required>
+                <option value="">Pilih kategori</option>
+                @foreach(($categories ?? []) as $label => $prefix)
+                  <option value="{{ $label }}" {{ old('kategori', $room->kategori) === $label ? 'selected' : '' }}>{{ $label }}</option>
+                @endforeach
+              </select>
+              @error('kategori')
+                <div class="text-danger small">{{ $message }}</div>
+              @enderror
+            </div>
 
             <div class="col-md-6">
               <label for="name" class="form-label">Nama Ruangan</label>
@@ -27,11 +40,6 @@
               @error('name')
                 <div class="text-danger small">{{ $message }}</div>
               @enderror
-            </div>
-
-            <div class="col-md-6">
-              <label for="kode" class="form-label">Kode</label>
-              <input type="text" id="kode" name="kode" class="form-control" value="{{ old('kode', $room->kode) }}">
             </div>
 
             <div class="col-12 text-end mt-3">

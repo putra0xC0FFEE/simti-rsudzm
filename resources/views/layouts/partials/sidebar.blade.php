@@ -48,49 +48,26 @@
 				</a>
 			</li>
 
-			@auth
-			@if (Auth::user()->role === 'admin')
-<li class="sidebar-header">Administrator</li>
-<li class="sidebar-item {{ request()->is('pengguna') ? 'active' : '' }}">
-    <a class="sidebar-link" href="{{ url('/pengguna') }}">
-        <i class="align-middle" data-feather="user"></i>
-        <span class="align-middle">Pengguna</span>
-    </a>
- </li>
+			<li class="sidebar-item {{ request()->is('pengguna') ? 'active' : '' }}">
+				<a class="sidebar-link" href="{{ url('/pengguna') }}">
+					<i class="align-middle" data-feather="user"></i>
+					<span class="align-middle">Pengguna</span>
+				</a>
+			</li>
 
-@php($mdOpen = request()->is('ruangan*'))
-<li class="sidebar-item">
-    <a data-bs-target="#masterDataMenu" data-bs-toggle="collapse" class="sidebar-link {{ $mdOpen ? '' : 'collapsed' }}" href="#">
-        <i class="align-middle" data-feather="database"></i>
-        <span class="align-middle">Master Data</span>	
-    </a>
+			<li class="sidebar-item {{ request()->is('ruangan*') ? 'active' : '' }}">
+				<a class="sidebar-link" href="{{ url('/ruangan') }}">
+					<i class="align-middle" data-feather="layout"></i>
+					<span class="align-middle">Ruangan</span>
+				</a>
+			</li>
 
-    <ul id="masterDataMenu" class="sidebar-dropdown list-unstyled collapse {{ $mdOpen ? 'show' : '' }}" data-bs-parent="#sidebar">
-        <li class="sidebar-item {{ request()->is('ruangan*') ? 'active' : '' }}">
-            <a class="sidebar-link" href="{{ url('/ruangan') }}">
-                <i class="align-middle" data-feather="layout"></i>
-                <span class="align-middle">Ruangan</span>
-            </a>
-        </li>
-
-        <li class="sidebar-item">
-            <a class="sidebar-link" href="{{ url('/kategori-perangkat') }}">
-                <i class="align-middle" data-feather="cpu"></i>
-                <span class="align-middle">Kategori Perangkat</span>
-            </a>
-        </li>
-
-        <li class="sidebar-item">
-            <a class="sidebar-link" href="{{ url('/jenis-perangkat') }}">
-                <i class="align-middle" data-feather="grid"></i>
-                <span class="align-middle">Jenis Perangkat</span>
-            </a>
-        </li>
-    </ul>
-
-</li>
-                @endif
-                @endauth
+			<li class="sidebar-item {{ request()->is('helpdesk') ? 'active' : '' }}">
+				<a class="sidebar-link" href="{{ url('/helpdesk') }}">
+					<i class="align-middle" data-feather="life-buoy"></i>
+					<span class="align-middle">Helpdesk</span>
+				</a>
+			</li>
 
                 @auth
                 <li class="sidebar-item">

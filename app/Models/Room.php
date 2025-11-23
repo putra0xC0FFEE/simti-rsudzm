@@ -12,7 +12,12 @@ class Room extends Model
     protected $table = 'rooms';
 
     protected $fillable = [
+        'room_id',
+        'kategori',
         'name',
-        'kode',
     ];
+
+    protected $primaryKey = 'room_id';
+    public $incrementing = false;
+    protected $keyType = 'string';
 }

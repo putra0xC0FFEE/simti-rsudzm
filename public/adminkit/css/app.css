@@ -75,4 +75,77 @@
   border-radius: 6px;
 }
 
- /*# sourceMappingURL=app.css.map*/
+ 
+.search-rounded {
+  border-radius: 999px;
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+  border: 1px solid #cbd5f5;
+  box-shadow: inset 0 1px 2px rgba(0,0,0,0.05);
+}
+.search-rounded:focus {
+  border-color: #2563eb;
+  box-shadow: 0 0 0 0.15rem rgba(37,99,235,0.25);
+}
+
+/* Ruangan table styles */
+.table-card {
+  border-radius: 18px;
+  border: 1px solid #edf1f7;
+}
+
+.table-card .card-header {
+  border-bottom: 1px solid #edf1f7;
+}
+
+.table-card .table thead th {
+  background-color: #f7f9fc;
+  color: #475467;
+  border-bottom: none;
+  font-weight: 600;
+}
+
+.table-card .table tbody td {
+  vertical-align: middle;
+  border-color: #f0f2f6;
+}
+
+.table-card .pagination .page-link {
+  border-radius: 8px;
+  color: #6b7280;
+  font-weight: 500;
+}
+
+.table-card .pagination .page-link:hover {
+  color: #2563eb;
+}
+
+.table-card .pagination .active>.page-link,
+.table-card .pagination .page-link.active {
+  background-color: #2563eb;
+  border-color: #2563eb;
+  color: #fff;
+}
+
+/* Layout adjustments so footer stays at bottom */
+.wrapper {
+  min-height: 100vh;
+  display: flex;
+}
+
+.main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.main .content {
+  flex: 1 0 auto;
+}
+
+.footer {
+  flex-shrink: 0;
+  border-top: 1px solid #edf1f7;
+  background: #fff;
+}
+/*# sourceMappingURL=app.css.map*/

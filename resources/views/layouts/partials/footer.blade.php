@@ -1,15 +1,10 @@
 <footer class="footer">
 	<div class="container-fluid">
 		<div class="row text-muted">
-			<div class="col-6 text-start">
+			<div class="col-12">
 				<p class="mb-0">
-	<strong>Tim IT UPTD RSUD dr. Zubir Mahmud</strong> &copy; {{ date('Y') }}
+	&copy; Copyright {{ date('Y') }} - <a href="https://sontekan.com" class="text-reset text-decoration-none" target="_blank" rel="noopener"><strong>sontekan.com</strong></a> All Rights Reserved.
 </p>
-			</div>
-			<div class="col-6 text-end">
-				<p class="mb-0">
-					<strong>v{{ env('APP_VERSION', '1.0.0') }}</strong>
-				</p>
 			</div>
 		</div>
 	</div>

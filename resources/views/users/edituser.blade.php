@@ -27,7 +27,7 @@
           </div>
         @endif
 
-        <form method="POST" action="{{ route('users.update', $user->id) }}" class="row g-3">
+        <form method="POST" action="{{ route('users.update', $encoded ?? encrypt($user->username)) }}" class="row g-3">
           @csrf
           @method('PUT')
 
