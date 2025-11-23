@@ -21,16 +21,24 @@
           <div class="row g-3">
 
             <div class="col-md-6">
-              <label for="name" class="form-label">Nama Ruangan</label>
-              <input type="text" id="name" name="name" class="form-control" placeholder="Masukkan nama ruangan" value="{{ old('name') }}" required>
-              @error('name')
+              <label for="kategori" class="form-label">Kategori Ruangan</label>
+              <select id="kategori" name="kategori" class="form-select" required>
+                <option value="">Pilih kategori</option>
+                @foreach(($categories ?? []) as $label => $prefix)
+                  <option value="{{ $label }}" {{ old('kategori') === $label ? 'selected' : '' }}>{{ $label }}</option>
+                @endforeach
+              </select>
+              @error('kategori')
                 <div class="text-danger small">{{ $message }}</div>
               @enderror
             </div>
 
             <div class="col-md-6">
-              <label for="kode" class="form-label">Kode</label>
-              <input type="text" id="kode" name="kode" class="form-control" placeholder="Kode Ruangan" value="{{ old('kode') }}">
+              <label for="name" class="form-label">Nama Ruangan</label>
+              <input type="text" id="name" name="name" class="form-control" placeholder="Masukkan nama ruangan" value="{{ old('name') }}" required>
+              @error('name')
+                <div class="text-danger small">{{ $message }}</div>
+              @enderror
             </div>
 
             <div class="col-12 text-end mt-3">
@@ -46,7 +54,4 @@
   </div>
 </div>
 
-<script>
-  if (typeof feather !== 'undefined') feather.replace();
-</script>
 @endsection

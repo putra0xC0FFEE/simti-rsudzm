@@ -27,13 +27,8 @@
         </div>
     </main>
 
-<footer class="py-3 mt-auto" style="font-size: 14px; color: #555;">
-    <div class="container">
-        <div class="d-flex justify-content-between align-items-center">
-            <div><strong>TIM IT UPTD RSUD dr. Zubir Mahmud</strong> &copy; {{ date('Y') }}</div>
-            <div><strong>v{{ env('APP_VERSION', '1.0.0') }}</strong></div>
-        </div>
-    </div>
+<footer class="py-3 mt-auto text-center" style="font-size: 14px; color: #555;">
+    &copy; Copyright {{ date('Y') }} - <a href="https://sontekan.com" class="text-reset text-decoration-none" target="_blank" rel="noopener"><strong>sontekan.com</strong></a> All Rights Reserved.
 </footer>
 
     <script src="{{ asset('adminkit/js/app.js') }}"></script>

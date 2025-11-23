@@ -18,6 +18,11 @@
       </div>
 
       <div class="card-body">
+        <form method="GET" action="{{ route('users.index') }}" class="mb-1">
+          <div class="col-md-4 px-0">
+            <input type="text" name="q" value="{{ $search ?? '' }}" class="form-control search-rounded" placeholder="Cari Data">
+          </div>
+        </form>
 
         {{-- Tabel data --}}
         <div class="table-responsive">
@@ -39,14 +44,15 @@
                   <td>{{ $user->username }}</td>
                   <td><span class="badge bg-{{ $user->role === 'admin' ? 'primary' : 'secondary' }} text-uppercase">{{ $user->role }}</span></td>
                   <td>
+                    @php($encoded = encrypt($user->username))
                     <div class="d-flex gap-2">
                       {{-- Tombol Edit --}}
-                      <a href="{{ route('users.edit', ['id' => $user->id]) }}" class="btn btn-sm btn-outline-secondary">
+                      <a href="{{ route('users.edit', $encoded) }}" class="btn btn-sm btn-outline-secondary">
                         <i data-feather="edit-2"></i> Edit
                       </a>
 
                       {{-- Tombol Hapus --}}
-                      <form method="POST" action="{{ route('users.destroy', $user->id) }}" class="js-delete-form" data-username="{{ $user->username }}">
+                      <form method="POST" action="{{ route('users.destroy', $encoded) }}" class="js-delete-form" data-username="{{ $user->username }}">
                         @csrf
                         @method('DELETE')
                         <button type="submit" class="btn btn-sm btn-outline-danger">

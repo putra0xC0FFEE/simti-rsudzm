@@ -7,7 +7,7 @@
 
 <div class="row">
   <div class="col-12">
-    <div class="card shadow-sm">
+    <div class="card shadow-sm table-card">
       <div class="card-header d-flex justify-content-between align-items-center">
         <h5 class="card-title mb-0">Tabel Ruangan</h5>
         <a href="{{ route('rooms.create') }}" class="btn btn-sm btn-primary d-inline-flex align-items-center gap-2">
@@ -16,29 +16,38 @@
         </a>
       </div>
       <div class="card-body">
+        <form method="GET" action="{{ route('rooms.index') }}" class="mb-1">
+          <div class="col-md-4 px-0">
+            <input type="text" name="q" value="{{ $search ?? '' }}" class="form-control search-rounded" placeholder="Cari Data">
+          </div>
+        </form>
 
         <div class="table-responsive">
           <table class="table table-striped table-hover align-middle">
             <thead>
               <tr>
                 <th style="width:60px">No</th>
-                <th>Kode</th>
+                <th>Kode Ruangan</th>
+                <th>Kategori</th>
                 <th>Nama</th>
                 <th style="width:160px">Aksi</th>
               </tr>
             </thead>
             <tbody>
+              @php($start = ($rooms->currentPage() - 1) * $rooms->perPage())
               @forelse($rooms as $index => $room)
                 <tr>
-                  <td>{{ ($rooms->currentPage() - 1) * $rooms->perPage() + $index + 1 }}</td>
-                  <td>{{ $room->kode }}</td>
+                  <td>{{ $start + $index + 1 }}</td>
+                  <td>{{ $room->room_id }}</td>
+                  <td>{{ $room->kategori }}</td>
                   <td>{{ $room->name }}</td>
                   <td>
+                    @php($encoded = encrypt($room->room_id))
                     <div class="d-flex gap-2">
-                      <a href="{{ route('rooms.edit', ['id' => $room->id]) }}" class="btn btn-sm btn-outline-secondary">
+                      <a href="{{ route('rooms.edit', $encoded) }}" class="btn btn-sm btn-outline-secondary">
                         <i data-feather="edit-2"></i> Edit
                       </a>
-                      <form method="POST" action="{{ route('rooms.destroy', $room->id) }}" class="js-delete-room">
+                      <form method="POST" action="{{ route('rooms.destroy', $encoded) }}" class="js-delete-room">
                         @csrf
                         @method('DELETE')
                         <button type="submit" class="btn btn-sm btn-outline-danger">
@@ -50,16 +59,21 @@
                 </tr>
               @empty
                 <tr>
-                  <td colspan="4" class="text-center text-muted">Belum ada data ruangan.</td>
+                  <td colspan="5" class="text-center text-muted">Belum ada data ruangan.</td>
                 </tr>
               @endforelse
             </tbody>
           </table>
         </div>
-
-        <div class="mt-3">
-          {{ $rooms->withQueryString()->links() }}
-        </div>
+        @if($rooms->hasPages())
+          <div class="d-flex justify-content-between flex-wrap gap-2 mt-3 align-items-center">
+            <small class="text-muted">
+              Menampilkan {{ $rooms->firstItem() }}-{{ $rooms->lastItem() }} dari {{ $rooms->total() }} ruangan
+            </small>
+            {{ $rooms->withQueryString()->links('pagination::bootstrap-5') }}
+          </div>
+        @endif
+      </div>
       </div>
     </div>
   </div>
@@ -75,8 +89,11 @@
     if (success && typeof Swal !== 'undefined') {
       Swal.fire({ icon: 'success', title: 'Berhasil', text: success, timer: 1800, showConfirmButton: false });
     }
+    const errorMessage = @json(session('error'));
+    if (errorMessage && typeof Swal !== 'undefined') {
+      Swal.fire({ icon: 'error', title: 'Gagal', text: errorMessage });
+    }
 
-    // SweetAlert konfirmasi hapus ruangan
     document.querySelectorAll('form.js-delete-room').forEach(function (form) {
       form.addEventListener('submit', function (e) {
         e.preventDefault();
@@ -93,6 +110,7 @@
         }).then((result) => { if (result.isConfirmed) form.submit(); });
       });
     });
+
   })();
-  </script>
+</script>
 @endsection
