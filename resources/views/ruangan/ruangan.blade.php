@@ -16,9 +16,9 @@
         </a>
       </div>
       <div class="card-body">
-        <form method="GET" action="{{ route('rooms.index') }}" class="mb-1">
+        <form method="GET" action="{{ route('rooms.index') }}" class="mb-3">
           <div class="col-md-4 px-0">
-            <input type="text" name="q" value="{{ $search ?? '' }}" class="form-control search-rounded" placeholder="Cari Data">
+            <input type="text" name="q" value="{{ request('q') }}" class="form-control search-rounded" placeholder="Cari Data">
           </div>
         </form>
 
@@ -26,32 +26,34 @@
           <table class="table table-striped table-hover align-middle">
             <thead>
               <tr>
-                <th style="width:60px">No</th>
-                <th>Kode Ruangan</th>
-                <th>Kategori</th>
-                <th>Nama</th>
-                <th style="width:160px">Aksi</th>
+                <th class="col-no">No</th>
+                <th class="col-code">Kode Ruangan</th>
+                <th class="col-kategori">Kategori</th>
+                <th class="col-nama">Nama</th>
+                <th class="col-aksi">Aksi</th>
               </tr>
             </thead>
             <tbody>
               @php($start = ($rooms->currentPage() - 1) * $rooms->perPage())
               @forelse($rooms as $index => $room)
                 <tr>
-                  <td>{{ $start + $index + 1 }}</td>
-                  <td>{{ $room->room_id }}</td>
-                  <td>{{ $room->kategori }}</td>
-                  <td>{{ $room->name }}</td>
-                  <td>
+                  <td class="col-no">{{ $start + $index + 1 }}</td>
+                  <td class="col-code text-nowrap">{{ $room->room_id }}</td>
+                  <td class="col-kategori">{{ $room->kategori }}</td>
+                  <td class="col-nama">{{ $room->name }}</td>
+                  <td class="col-aksi">
                     @php($encoded = encrypt($room->room_id))
                     <div class="d-flex gap-2">
                       <a href="{{ route('rooms.edit', $encoded) }}" class="btn btn-sm btn-outline-secondary">
-                        <i data-feather="edit-2"></i> Edit
+                        <i data-feather="edit-2"></i>
+                        Edit
                       </a>
                       <form method="POST" action="{{ route('rooms.destroy', $encoded) }}" class="js-delete-room">
                         @csrf
                         @method('DELETE')
                         <button type="submit" class="btn btn-sm btn-outline-danger">
-                          <i data-feather="trash-2"></i> Hapus
+                          <i data-feather="trash-2"></i>
+                          Hapus
                         </button>
                       </form>
                     </div>
@@ -65,15 +67,12 @@
             </tbody>
           </table>
         </div>
+
         @if($rooms->hasPages())
-          <div class="d-flex justify-content-between flex-wrap gap-2 mt-3 align-items-center">
-            <small class="text-muted">
-              Menampilkan {{ $rooms->firstItem() }}-{{ $rooms->lastItem() }} dari {{ $rooms->total() }} ruangan
-            </small>
-            {{ $rooms->withQueryString()->links('pagination::bootstrap-5') }}
+          <div class="d-flex justify-content-end mt-0">
+            {{ $rooms->withQueryString()->links('pagination::bootstrap-4') }}
           </div>
         @endif
-      </div>
       </div>
     </div>
   </div>
@@ -87,7 +86,13 @@
   (function () {
     const success = @json(session('success'));
     if (success && typeof Swal !== 'undefined') {
-      Swal.fire({ icon: 'success', title: 'Berhasil', text: success, timer: 1800, showConfirmButton: false });
+      Swal.fire({
+        icon: 'success',
+        title: 'Berhasil',
+        text: success,
+        timer: 1800,
+        showConfirmButton: false
+      });
     }
     const errorMessage = @json(session('error'));
     if (errorMessage && typeof Swal !== 'undefined') {

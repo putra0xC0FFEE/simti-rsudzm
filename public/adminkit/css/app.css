@@ -110,21 +110,65 @@
   border-color: #f0f2f6;
 }
 
+.table-card .col-no {
+  width: 70px;
+  text-align: center;
+}
+
+.table-card .col-code {
+  width: 130px;
+}
+
+.table-card .col-aksi {
+  width: 160px;
+  white-space: nowrap;
+}
+
+.table-card .col-kategori {
+  min-width: 160px;
+}
+
+.table-card .col-nama {
+  min-width: 160px;
+}
+
+.table-card .pagination {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.table-card .pagination .page-item {
+  display: inline-flex;
+}
+
 .table-card .pagination .page-link {
-  border-radius: 8px;
-  color: #6b7280;
-  font-weight: 500;
+  border-radius: 9px;
+  padding: 5px 9px;
+  font-weight: 600;
+  min-width: 30px;
+  text-align: center;
+  border: 1px solid #e5e7eb;
+  color: #1a73e8;
+  background: #f8fafc;
 }
 
-.table-card .pagination .page-link:hover {
-  color: #2563eb;
-}
-
-.table-card .pagination .active>.page-link,
+.table-card .pagination .page-item.active .page-link,
 .table-card .pagination .page-link.active {
-  background-color: #2563eb;
-  border-color: #2563eb;
+  background: #1a73e8;
   color: #fff;
+  border-color: #1a73e8;
+}
+
+.table-card .pagination .page-item.disabled .page-link,
+.table-card .pagination .page-item.disabled .page-link:hover {
+  color: #9ca3af;
+  background: #f8fafc;
+  border-color: #e5e7eb;
+  cursor: not-allowed;
 }
 
 /* Layout adjustments so footer stays at bottom */
@@ -141,11 +185,13 @@
 
 .main .content {
   flex: 1 0 auto;
+  min-height: calc(100vh - 140px);
 }
 
 .footer {
   flex-shrink: 0;
   border-top: 1px solid #edf1f7;
   background: #fff;
+  margin-top: 24px;
 }
 /*# sourceMappingURL=app.css.map*/
