@@ -12,13 +12,10 @@ class UserSeeder extends Seeder
     {
         DB::table('users')->insert([
             [
-                'name' => 'Muhammad Syahputra',
-                'username' => 'putra',
+                'name' => 'Admin SIMTI',
+                'username' => 'admin',
                 'role' => 'admin',
-                'email' => '',
-                'email_verified_at' => now(),
-                'password' => Hash::make('12345678'), 
-                'remember_token' => null,
+                'password' => Hash::make('admin123'), 
                 'created_at' => now(),
                 'updated_at' => now(),
             ],

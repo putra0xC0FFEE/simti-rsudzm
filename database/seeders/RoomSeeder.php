@@ -86,6 +86,7 @@ class RoomSeeder extends Seeder
             'PONEK',
             'IBS',
             'UTDRS',
+            'HCU'
         ];
 
         $counter = 1;
